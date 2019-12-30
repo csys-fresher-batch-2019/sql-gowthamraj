@@ -1,6 +1,6 @@
 # Super Market Management
 
-* http://supermarket.in
+* supermarket
 
 ## Features
   * Login: Admin and employee 
