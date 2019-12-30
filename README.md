@@ -88,7 +88,8 @@ create table customer_card(
 Customer_name varchar2(40) not null,
 mobile_number char(10) not null,
 address varchar2(50),
-constraint customer_name_uq unique(customer_name)
+constraint customer_name_uq unique(customer_name),
+constraint mobile_number_ck check(mobile_number >999999999 and mobile_number <10000000000)
 );
 ```
 * insert query:
