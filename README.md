@@ -1,25 +1,28 @@
-#Super Market Management
+# Super Market Management
 
-##Features
-  *Login: Admin and employee 
-  
+* http://supermarket.in
+
+## Features
+  * Login: Admin and employee 
+  ```sql
 create table login (user_name varchar2(50) not null,
 passwords varchar2(50) not null,
 constraint user_name_uq unique(user_name)
 );
-
+```
+```sql
 --insert
-
 insert into login (user_name,passwords)
 values ('gowtham','raj');
 insert into login (user_name,passwords)
 values ('kennedy','kannan');
 insert into login (user_name,passwords)
 values ('mercy','grace');
-
---Display
-
+```
+```sql
+Query:
 select * from login;
+```
   ##Features II
   *Product Table:Display the product and price
 
