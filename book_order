@@ -1,0 +1,89 @@
+    
+drop table book;
+create table book (book_id number,
+book_name varchar2(50) not null,
+author_name varchar(50) not null,
+price number(4) not null,
+publisher varchar2(50) not null,
+version number not null,
+category varchar(50) not null,
+active number,
+constraint book_author_name_version_uq unique(book_name,author_name,version),
+constraint book_id_pk primary key (book_id),
+constraint price_ck check (price >= 0)
+);
+insert into book (book_id,book_name,author_name,price,publisher,version,category,active)
+values(1,'Robert Steve life','sane watson',2000,'mc clarra',4,'poem',1);
+insert into book (book_id,book_name,author_name,price,publisher,version,category,active)
+values(2,'life is hell','sham dummy',199,'mc clarra',4,'novel',0);
+
+
+select * from book;
+
+
+
+
+
+
+drop table orders;
+create table orders (order_id number,
+                    username varchar2(50) not null,
+                    book_id number not null,
+                    ordered_date timestamp default systimestamp,
+                    delivered_date date ,
+                    total_amount number not null,
+                    quantity number not null,
+                    order_status varchar2(100) not null,
+                    constraint order_id_pk primary key (order_id),
+                    constraint book_id_fk foreign key(book_id) references book (book_id),  
+                    constraint total_amount_ck check(total_amount>=0),
+                    constraint quantity_ck check(quantity >=1)
+                   );
+                   insert into orders (order_id,username,book_id,delivered_date,total_amount,quantity,order_status)
+                   values(3,'Raj',1,'31-DEC-2019',299,1,'cancelled');
+                   
+                   insert into orders (order_id,username,book_id,delivered_date,total_amount,quantity,order_status)
+                   values(4,'kannan',2,'3-JAN-2019',499,2,'delivered');
+                   
+                   select * from orders;
+
+
+
+
+
+drop table book_stock;
+create table book_stock ( stock_id number not null,
+                    book_id number not null,
+                    quantity number not null,
+                    constraint stock_id_pk primary key(stock_id)
+                    );
+                    insert into book_stock (stock_id,book_id,quantity)
+                    values(100,1,14);
+                    insert into book_stock (stock_id,book_id,quantity)
+                    values(101,2,4);
+                    insert into book_stock (stock_id,book_id,quantity)
+                    values(102,3,12);
+                    
+                    
+                    select * from book_stock;
+
+
+
+drop table bookss;
+create table bookss (book_id number not null,
+                    book_title varchar2(50) not null,
+                    price number not null);
+                    insert into bookss(book_id,book_title,price)
+                    values(1,'java',199);
+                    insert into bookss(book_id,book_title,price)
+                    values(2,'oracle',99);
+                    insert into bookss(book_id,book_title,price)
+                    values(11,'php',499);
+                    
+                    
+                    select * from bookss;
+                    --delete from bookss where book_id=11;
+                    
+                    
+                    select book_title,(select quantity from book_stock where book_id=b.book_id) as quantity from bookss b;
+                    select book_name ,(select price from bookss where price=b.price )as price from book b;
