@@ -1,0 +1,60 @@
+drop table empl;
+create table empl (
+user_id number not null,
+user_name varchar2(20) not null,
+mail varchar2(30),
+passwords varchar2(20) not null,
+constraint user_uq unique(user_name)
+);
+
+insert into empl(user_id,user_name,mail,passwords)
+values(1,'raj','raj@mail.com','asd');
+insert into empl(user_id,user_name,mail,passwords)
+values(2,'gowtham','gowtham@mail.com','raj');
+insert into empl(user_id,user_name,mail,passwords)
+values(3,'mercy','mercy@mail.com','feln');
+insert into empl(user_id,user_name,mail,passwords)
+values(4,'grace','grace@mail.com','grace');
+insert into empl(user_id,user_name,mail,passwords)
+values(5,'kannan','kanann@mail.com','asd');
+
+select * from empl;
+
+
+commit;
+
+
+
+
+drop table task;
+CREATE table task (task_id number not null,
+task_name varchar2(30) not null,
+task_status varchar2(15),
+constraint task_id_pk primary key (task_id),
+constraint task_status_ck check (task_status in('pending','completed'))
+);
+ insert into task (task_id,task_name,task_status)
+ values (1,'install oracle','pending');
+ insert into task (task_id,task_name,task_status)
+ values (11,'create docs','completed');
+ insert into task (task_id,task_name,task_status)
+ values (2,'system update','pending');
+ insert into task (task_id,task_name,task_status)
+ values (3,'project','completed');
+ insert into task (task_id,task_name,task_status)
+ values (4,'install oracle xe','pending');
+
+select * from task;
+commit;
+
+select user_name ,(select task_name from task where task_id=e.user_id) as task_name from empl e;
+
+select * from empl e,task t where e.user_id = t.task_id;
+
+select e.user_id,e.user_name,t.task_status from empl e right outer join task t on e.user_id=t.task_id; 
+
+
+select e.user_id,e.user_name,t.task_status from empl e left outer join task t on e.user_id=t.task_id;
+ 
+ 
+select * from empl e full outer join task t on  e.user_id=t.task_id;
