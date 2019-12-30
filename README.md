@@ -11,7 +11,7 @@ constraint user_name_uq unique(user_name)
 );
 ```
 ```sql
---insert
+* insert Query:
 insert into login (user_name,passwords)
 values ('gowtham','raj');
 insert into login (user_name,passwords)
