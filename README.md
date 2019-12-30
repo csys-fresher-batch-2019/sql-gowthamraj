@@ -1,7 +1,5 @@
 # Super Market Management
 
-* supermarket
-
 ## Features
   * Login: Admin and employee 
   ```sql
