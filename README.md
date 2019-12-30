@@ -21,7 +21,7 @@ values ('mercy','grace');
 ```
 * Display Query:
 ```sql
-select * from login;
+select * from login where user_name ='gowtham' and passwords ='raj';
 ```
   ##Features II
   *Product Table:Display the product and price
