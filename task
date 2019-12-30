@@ -1,0 +1,46 @@
+create table work (id number not null,
+task varchar2(20)not null, 
+name number not null,
+deadline date not null,
+completed_on date,
+status varchar2(20),                  
+constraint id_pk primary key(id),
+constraint name_fk foreign key(name) references mail(id),
+constraint task_uq unique(task),
+constraint by_uq unique(name),
+constraint deadline_uq unique(deadline),
+constraint completed_on_ck check(completed_on <= deadline)
+);
+alter table work add (priority_number number);
+alter table work add(created_date timestamp default systimestamp);
+alter table work add(modified_date date);
+insert into work(id,task,name,deadline,completed_on,priority_number,modified_date,status)
+values(1,'install','5','01-jan-2020','27-dec-2019',3,'03-jan-2020','Completed');
+insert into work(id,task,name,deadline,completed_on,priority_number,modified_date,status)
+values(2,'sql','10','15-jan-2020','12-jan-2019',1,'14-jan-2020','pending');
+insert into work(id,task,name,deadline,completed_on,priority_number,modified_date,status)
+values(3,'os','15','21-jan-2020','26-dec-2019',2,'17-jan-2020','completed');
+
+
+
+
+
+
+
+
+create table mail 
+(
+  id number (5) not null,
+  name varchar2(20),
+  Email varchar2(50) not null unique,
+  passwords varchar2(20)not null,
+  active number,role char(1),
+  constraint id_pk primary key(id)
+);
+insert into mail(id,name,Email,passwords,active,role)
+values(1,'gowtham','gowthamjerry1509@gmail.com','gowthamkennedy',1,'A');
+
+insert into mail(id,name,Email,passwords,active,role)
+values(2,'raj','sparten@gmail.com','gowthamkennedy',1,'U');
+insert into mail(id,name,Email,passwords,active,role)
+values(3,'kannan','tomandjerry@gmail.com','gowthamkennedy',0,'U');
