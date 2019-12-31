@@ -21,6 +21,16 @@ values ('mercy','grace');
 ```sql
 select * from login where user_name ='gowtham' and passwords ='raj';
 ```
+#### Table
+
+| user_name | password |
+|-----------|----------|
+| gowtham   | raj      |
+| kennedy   | kannan   |
+| mercy     | grace    |
+
+
+
   ##Features II
   *Product Table:Display the product and price
 ```sql
@@ -49,6 +59,17 @@ values(5,'chocolate',99);
 ```sql
  select * from product;
 ```
+#### TABLES
+
+| product_id | product_name | price |
+|------------|--------------|-------|
+| 1          | dall         | 125   |
+| 2          | stationary   | 38    |
+| 3          | decouration  | 300   |
+| 4          | biscut       | 25    |
+| 5          | chocolate    | 99    |
+
+
 ##Features III
 *product_Stock:display about the product(quantity,expiry_date)
   ```sql
@@ -56,7 +77,7 @@ create sequence pro_no start with 100 INCREMENT by 1;
 create table product_stock (product_no number ,
 stock_id number not null,
 quantity number,
-product_arrival timestamp default systimestamp not null,
+product_arrival date not null,
 expery_date date not null,
 constraint product_no_pk primary key (product_no),
 constraint stock_id_fk foreign key(stock_id) references product(product_id),
@@ -66,22 +87,34 @@ constraint expery_date_ck check (expery_date > product_arrival)
 
 * insert query:
 ```sql
-insert into product_stock (product_no,stock_id,quantity,expery_date)
-values(pro_no.nextval,1, 59,'12-dec-2021');
-insert into product_stock (product_no,stock_id,quantity,expery_date)
-values(pro_no.nextval,2, 92,'12-feb-2021');
-insert into product_stock (product_no,stock_id,quantity,expery_date)
-values(pro_no.nextval,4, 89,'12-mar-2021');
-insert into product_stock (product_no,stock_id,quantity,expery_date)
-values(pro_no.nextval,3, 109,'12-apr-2021');
-insert into product_stock (product_no,stock_id,quantity,expery_date)
-values(pro_no.nextval,5, 19,'12-jun-2021');
+insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
+values(pro_no.nextval,1, 59,'10-jan-2019','12-dec-2021');
+insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
+values(pro_no.nextval,2, 92,'10-feb-2019','12-feb-2021');
+insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
+values(pro_no.nextval,4, 89,'10-mar-2019','12-mar-2021');
+insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
+values(pro_no.nextval,3, 109,'10-apr-2019','12-apr-2021');
+insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
+values(pro_no.nextval,5, 19,'10-jun-2019','12-jun-2021');
 ```
 * Display query:
 ```sql
 select * from product_stock;
 ```
-  ##Features IV
+#### Tables
+
+
+| product_no | stock_id | quantity | product_arriavl | expiry date |
+|------------|----------|----------|-----------------|-------------|
+| 1          | 1        | 59       | 10-jan-2019     | 12-dec-2021 |
+| 2          | 2        | 92       | 10-feb-2019     | 12-feb-2021 |
+| 3          | 4        | 89       | 10-mar-2019     | 12-mar-2021 |
+| 4          | 3        | 109      | 10-apr-2019     | 12-apr-2021 |
+| 5          | 5        | 19       | 10-jun-2019     | 12-jun-2021 |
+
+
+##Features IV
   *Customer_Card:add and display the regular customer details
   ```sql
 create table customer_card(
@@ -109,7 +142,17 @@ constraint mobile_number_ck check(mobile_number >999999999 and mobile_number <10
 ```sql
  select * from customer_card;
 ```
-  ##Features V
+#### Tables
+| customer_name | mobile-number | address                       |
+|---------------|---------------|-------------------------------|
+| raj           | 8122688402    | 2/2079 A Anna salai, Sivakasi |
+| kannan        | 9788941516    | 28/3 mani nagar, Sivakasi     |
+| kennedy       | 9952374668    | 48/6 Babu nagar, Madurai      |
+| shiva         | 9791627426    | tuticorin                     |
+| mani maran    | 7708164739    | chennai                       |
+
+
+  ## Features V
   *bills:display and provide invoice bill to the customer
   ```sql
 create table bills(bill_no number ,
@@ -138,3 +181,10 @@ values(4,'kannan','chocolate',3,450,450);
 ```sql
 select * from bills;
 ```
+#### Tables
+| bill_no | customer_name | product_name | quantity | price | total |
+|---------|---------------|--------------|----------|-------|-------|
+| 1       | mani maran    | dall         | 3        | 120   | 360   |
+| 2       | gowtham       | decouration  | 2        | 250   | 500   |
+| 3       | shiva         | stationary   | 8        | 12    | 96    |
+| 4       | kannan        | chocolate    | 3        | 150   | 450   |
