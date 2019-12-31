@@ -188,3 +188,43 @@ select * from bills;
 | 2       | gowtham       | decouration  | 2        | 250   | 500   |
 | 3       | shiva         | stationary   | 8        | 12    | 96    |
 | 4       | kannan        | chocolate    | 3        | 150   | 450   |
+
+
+ # Features VI
+   employee details: display the employee details.
+```sql   
+create sequence emp_idd start with 1 increment by 1;
+create table employee(employee_id number not null,
+employee_name varchar2(50) not null,
+dob date not null,
+doj date,
+mobile_no number not null,
+address varchar2(75) not null,
+constraint employee_id_pk primary key (employee_id)
+);
+```
+ * insert query
+ ```sql
+insert into employee(employee_id,employee_name,dob,doj,mobile_no,address)
+values( emp_idd.nextval,'raj','12-jan-1982','02-feb-2018',9043023579,'rayapuram_peter');
+insert into employee(employee_id,employee_name,dob,doj,mobile_no,address)
+values( emp_idd.nextval,'peter','02-mar-1986','17-mar-2019',9043023579,'solinganallur');
+insert into employee(employee_id,employee_name,dob,doj,mobile_no,address)
+values( emp_idd.nextval,'philips','29-jun-1989','15-apr-2018',9043023579,'vandalur');
+insert into employee(employee_id,employee_name,dob,doj,mobile_no,address)
+values( emp_idd.nextval,'gowtham','09-sep-1989','02-dec-2017',9043023579,'goa');
+```
+
+* Display query
+
+```sql
+select * from employee;
+```
+
+| Employee_id | Employee_name | D.O.B     | D.O.J    | Mobile_no  | Address         |
+|-------------|---------------|-----------|----------|------------|-----------------|
+| 1           | raj           | 12-01-82  | 02-02-18 | 9043023579 | rayapuram_peter |
+| 2           | peter         | 02-03-86  | 17-03-19 | 9043023579 | solinganallur   |
+| 3           | philips       | 29-06-89  | 15-04-18 | 9043023579 | vandalur        |
+| 4           | gowtham       | 09-09-89  | 02-12-17 | 9043023579 | goa             |
+| 4           | kannan        | chocolate | 3        | 150        | 450             |
