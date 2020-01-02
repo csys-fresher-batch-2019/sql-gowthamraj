@@ -228,3 +228,33 @@ select * from employee;
 | 3           | philips       | 29-06-89  | 15-04-18 | 9043023579 | vandalur        |
 | 4           | gowtham       | 09-09-89  | 02-12-17 | 9043023579 | goa             |
 | 4           | kannan        | chocolate | 3        | 150        | 450             |
+
+
+ # Feature VII
+   display the product price 100 and 250
+     
+     ```sql
+     select * from product where price  between 100 and 250;
+     ```
+     
+     
+| Product_id | product_name | price |
+|------------|--------------|-------|
+| 1          | dall         | 125   |
+
+
+
+# Feature VIII
+ display the customer card holder purchase details(sub query)
+
+```sql
+select customer_name,
+(select product_name from bills where customer_name=c.customer_name )as customer_card_holder_purchase from customer_card c;
+```
+| customer_name | customer_card_holder purchase_details |   
+|---------------|---------------------------------------|
+| raj           | (null)                                |
+| kannan        | chocolate                             |
+| kennedy       | (null)                                |
+| shiva         | stationary                            |
+| mani maran    | dall                                  |
