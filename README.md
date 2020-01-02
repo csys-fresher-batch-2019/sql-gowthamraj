@@ -31,7 +31,7 @@ select * from login where user_name ='gowtham' and passwords ='raj';
 
 
 
-  ##Features II
+  ## Features II
   *Product Table:Display the product and price
 ```sql
 create table product(product_id number ,
@@ -326,3 +326,14 @@ select GET_TOTAL_AMOUNT(SYSDATE)as income_on_date from dual;
 | Income_on_date | 
 |----------------|
 | 690            | 
+
+# Features XIII
+ number of customer purchase on date
+ ```sql
+ select count(*) as number_of_customer,bill_date from bills group by bill_date;
+ ```
+ #### Table
+| Number_of_customer | bill_date |
+|--------------------|-----------|
+| 2                  | 01-01-20  |
+| 2                  | 02-01-20  |
