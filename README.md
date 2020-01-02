@@ -8,7 +8,7 @@ passwords varchar2(50) not null,
 constraint user_name_uq unique(user_name)
 );
 ```
-* insert Query:
+* Adding  login user details:
 ```sql
 insert into login (user_name,passwords)
 values ('gowtham','raj');
@@ -17,7 +17,7 @@ values ('kennedy','kannan');
 insert into login (user_name,passwords)
 values ('mercy','grace');
 ```
-* Display Query:
+* Verify the username and password :
 ```sql
 select * from login where user_name ='gowtham' and passwords ='raj';
 ```
@@ -42,7 +42,7 @@ constraint product_name_uq1 unique(product_name),
 constraint price_ck1 check(price >=1)
 );
 ```
-* insert query:
+* Adding product details:
 ```sql
 insert into product( product_id,product_name,price)
 values(1,'dall',125);
@@ -55,7 +55,7 @@ values(4,'biscut',25);
 insert into product( product_id,product_name,price)
 values(5,'chocolate',99);
 ```
-*Display Query:
+*Display the product:
 ```sql
  select * from product;
 ```
@@ -85,7 +85,7 @@ constraint expery_date_ck check (expery_date > product_arrival)
 );
 ```
 
-* insert query:
+* Adding the product stock details:
 ```sql
 insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
 values(pro_no.nextval,1, 59,'10-jan-2019','12-dec-2021');
@@ -98,7 +98,7 @@ values(pro_no.nextval,3, 109,'10-apr-2019','12-apr-2021');
 insert into product_stock (product_no,stock_id,quantity,product_arrival,expery_date)
 values(pro_no.nextval,5, 19,'10-jun-2019','12-jun-2021');
 ```
-* Display query:
+* Display the stocks:
 ```sql
 select * from product_stock;
 ```
@@ -125,7 +125,7 @@ constraint customer_name_uq unique(customer_name),
 constraint mobile_number_ck check(mobile_number >999999999 and mobile_number <10000000000)
 );
 ```
-* insert query:
+* Adding the customer card holder details:
 ```sql
  insert into customer_card(customer_name,mobile_number,address)
  values('raj',8122688402,'2/2079 A Anna salai, Sivakasi');
@@ -138,7 +138,7 @@ constraint mobile_number_ck check(mobile_number >999999999 and mobile_number <10
  insert into customer_card(customer_name,mobile_number,address)
  values('Mani Maran',7708164739, 'chennai');
 ```
-* Display query:
+* Display the customer card holder details:
 ```sql
  select * from customer_card;
 ```
@@ -165,7 +165,7 @@ constraint bill_no_pk primary key (bill_no),
 constraint product_name_fk foreign key (product_name) references product(product_name)
 );
 ```
-* insert query
+* Adding the billing details:
 ```sql
 insert into bills(bill_no,customer_name,product_name,quantity,price,total)
 values(1,'mani maran','dall',3,450,450);
@@ -176,12 +176,13 @@ values(3,'shiva','stationary',3,12,36);
 insert into bills(bill_no,customer_name,product_name,quantity,price,total)
 values(4,'kannan','chocolate',3,450,450);
 ```
-* Display query
+* Display the bills
 
 ```sql
 select * from bills;
 ```
-#### Tables
+#### Table
+
 | bill_no | customer_name | product_name | quantity | price | total |
 |---------|---------------|--------------|----------|-------|-------|
 | 1       | mani maran    | dall         | 3        | 120   | 360   |
@@ -203,7 +204,7 @@ address varchar2(75) not null,
 constraint employee_id_pk primary key (employee_id)
 );
 ```
- * insert query
+ * Adding the employee details
  ```sql
 insert into employee(employee_id,employee_name,dob,doj,mobile_no,address)
 values( emp_idd.nextval,'raj','12-jan-1982','02-feb-2018',9043023579,'rayapuram_peter');
@@ -215,11 +216,12 @@ insert into employee(employee_id,employee_name,dob,doj,mobile_no,address)
 values( emp_idd.nextval,'gowtham','09-sep-1989','02-dec-2017',9043023579,'goa');
 ```
 
-* Display query
+* Display the employee details
 
 ```sql
 select * from employee;
 ```
+#### Table
 
 | Employee_id | Employee_name | D.O.B     | D.O.J    | Mobile_no  | Address         |
 |-------------|---------------|-----------|----------|------------|-----------------|
@@ -227,7 +229,6 @@ select * from employee;
 | 2           | peter         | 02-03-86  | 17-03-19 | 9043023579 | solinganallur   |
 | 3           | philips       | 29-06-89  | 15-04-18 | 9043023579 | vandalur        |
 | 4           | gowtham       | 09-09-89  | 02-12-17 | 9043023579 | goa             |
-| 4           | kannan        | chocolate | 3        | 150        | 450             |
 
 
  # Feature VII
@@ -236,7 +237,7 @@ select * from employee;
      ```sql
      select * from product where price  between 100 and 250;
      ```
-     
+#### Table     
      
 | Product_id | product_name | price |
 |------------|--------------|-------|
@@ -247,10 +248,12 @@ select * from employee;
 # Feature VIII
  display the customer card holder purchase details(sub query)
 
-```sql
-select customer_name,
-(select product_name from bills where customer_name=c.customer_name )as customer_card_holder_purchase from customer_card c;
-```
+     ```sql
+     select customer_name,
+     (select product_name from bills where customer_name=c.customer_name )
+     as customer_card_holder_purchase from customer_card c;
+     ```
+#### Table
 | customer_name | customer_card_holder purchase_details |   
 |---------------|---------------------------------------|
 | raj           | (null)                                |
@@ -258,3 +261,68 @@ select customer_name,
 | kennedy       | (null)                                |
 | shiva         | stationary                            |
 | mani maran    | dall                                  |
+
+
+
+# Features IX
+ display the quantity in ascending order for monitor the fast moving product
+ 
+```sql
+select p.product_no,p.stock_id,p.quantity 
+from product_stock p
+left JOIN bills o on p.quantity = o.quantity order by quantity asc;
+```
+#### Table
+
+| product_no | stock_id | quantity |
+|------------|----------|----------|
+| 104        | 5        | 19       |
+| 100        | 1        | 59       |
+| 102        | 4        | 89       |
+| 101        | 2        | 92       |
+| 103        | 3        | 109      | 
+
+# Features X
+  Counting the working employee:
+  ```sql
+  
+select count(*)  as employee_count from employee;
+  ```
+  #### Table
+| Employee_count |
+|----------------|
+| 4              |    
+
+
+# Features XI
+ calculate daily income
+ ```sql
+ select sum(total)as daily_income from bills;
+```
+#### Table
+
+| Daily_income |
+|--------------|
+| 1176         | 
+
+# Features XII
+calculate the income any date(functions)
+```sql
+CREATE OR REPLACE FUNCTION GET_TOTAL_AMOUNT( i_date DATE)  RETURN NUMBER AS 
+v_total number;
+BEGIN
+
+select sum(total) INTO v_total from bills where bill_date ='02-jan-2020';
+  RETURN v_total;
+END GET_TOTAL_AMOUNT;
+```
+
+display the income 
+```sql
+select GET_TOTAL_AMOUNT(SYSDATE)as income_on_date from dual;
+```
+#### Table
+
+| Income_on_date | 
+|----------------|
+| 690            | 
