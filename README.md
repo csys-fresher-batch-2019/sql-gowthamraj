@@ -344,3 +344,47 @@ select GET_TOTAL_AMOUNT(SYSDATE)as income_on_date from dual;
 |--------------------|-----------|
 | 2                  | 01-01-20  |
 | 2                  | 02-01-20  |
+
+
+# features XIV
+ * which items did customer 101 purchase
+ ```sql
+select o.product_id,o.price,o.quantity from bill_order o where o.customer_no=101 ;  
+```
+
+#### Table
+| Product_id  |price  |quantity| 
+| 1           | 400   | 3      | 
+| 1           | 300   | 4      | 
+
+# Features XV
+* calculate the bill amount of purchase product id=101
+```sql
+update bills set total=(select sum(price) from bill_order where customer_no=101) where cus_no=101;
+
+select * from bills where cus_no=101;
+```
+
+#### Table
+
+| bill_no | bill_date | cus_no | customer_name | total | status    |
+|---------|-----------|--------|---------------|-------|-----------|
+| 2       | 02-01-20  | 101    | gowtham       | 700   | delivered |
+ 
+# Features XI
+ *display the customer card holder purchase details(sub query)
+```sql
+select customer_name,
+(select product_name from bills where customer_name=c.customer_name)as customer_card_holder_purchase from customer_card c;
+select * from bills;
+```
+
+#### Table
+
+| bill_no | bill_date | cus_no | customer_name | total |
+|---------|-----------|--------|---------------|-------|
+| 1       | 02-01-20  | 100    | mani maran    | 0     |
+| 2       | 02-01-20  | 101    | gowtham       | 700   |
+| 3       | 01-01-20  | 102    | shiva         | 0     |
+| 4       | 01-01-20  | 103    | kannan        | 0     |
+| 5       | 03-01-20  | 105    | rajan         | 0     |
