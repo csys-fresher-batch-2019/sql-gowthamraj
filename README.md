@@ -261,6 +261,7 @@ select * from employee;
      as customer_card_holder_purchase from customer_card c;
      ```
 #### Table
+
 | customer_name | customer_card_holder purchase_details |   
 |---------------|---------------------------------------|
 | raj           | (null)                                |
@@ -296,6 +297,7 @@ left JOIN bills o on p.quantity = o.quantity order by quantity asc;
 select count(*)  as employee_count from employee;
   ```
   #### Table
+  
 | Employee_count |
 |----------------|
 | 4              |    
@@ -340,6 +342,7 @@ select GET_TOTAL_AMOUNT(SYSDATE)as income_on_date from dual;
  select count(*) as number_of_customer,bill_date from bills group by bill_date;
  ```
  #### Table
+ 
 | Number_of_customer | bill_date |
 |--------------------|-----------|
 | 2                  | 01-01-20  |
