@@ -155,26 +155,34 @@ constraint mobile_number_ck check(mobile_number >999999999 and mobile_number <10
   ## Features V
   *bills:display and provide invoice bill to the customer
   ```sql
+create sequence bill_no_sq  start with 1  INCREMENT by 1;
+
+create sequence cus_no_sq  start with 100  INCREMENT by 1;
+
 create table bills(bill_no number ,
+bill_date date not null,
+cus_no number not null unique,
 customer_name varchar2(30)not null,
 product_name VARCHAR2(35) not null,
 quantity number not null,
 price number not null,
 total number not null,
+status varchar2(20) not null,
 constraint bill_no_pk primary key (bill_no),
 constraint product_name_fk foreign key (product_name) references product(product_name)
 );
+
 ```
 * Adding the billing details:
 ```sql
-insert into bills(bill_no,customer_name,product_name,quantity,price,total)
-values(1,'mani maran','dall',3,450,450);
-insert into bills(bill_no,customer_name,product_name,quantity,price,total)
-values(2,'gowtham','decoration',2,120,240);
-insert into bills(bill_no,customer_name,product_name,quantity,price,total)
-values(3,'shiva','stationary',3,12,36);
-insert into bills(bill_no,customer_name,product_name,quantity,price,total)
-values(4,'kannan','chocolate',3,450,450);
+insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
+values(bill_no_sq.nextval,'02-jan-2020',cus_no_sq.nextval,'mani maran','dall',3,450,450,'delivered');
+insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
+values(bill_no_sq.nextval,'02_jan_2020',cus_no_sq.nextval,'gowtham','decoration',2,120,240,'delivered');
+insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
+values(bill_no_sq.nextval,'01-jan-2020',cus_no_sq.nextval,'shiva','stationary',3,12,36,'delivered');
+insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
+values(bill_no_sq.nextval,'01-jan-2020',cus_no_sq.nextval,'kannan','chocolate',3,450,450,'delivered');
 ```
 * Display the bills
 
@@ -183,13 +191,12 @@ select * from bills;
 ```
 #### Table
 
-| bill_no | customer_name | product_name | quantity | price | total |
-|---------|---------------|--------------|----------|-------|-------|
-| 1       | mani maran    | dall         | 3        | 120   | 360   |
-| 2       | gowtham       | decouration  | 2        | 250   | 500   |
-| 3       | shiva         | stationary   | 8        | 12    | 96    |
-| 4       | kannan        | chocolate    | 3        | 150   | 450   |
-
+|bill_no|bill_date |cus_no|customer_name | product_name | quantity | price | total |  status   |
+|-------|----------|------|--------------|--------------|----------|-------|-------|-----------|
+| 61    | 02-01-20 | 100  | mani maran   | dall         | 3        | 450   | 450   | delivered |
+| 62    | 02-01-20 | 101  | gowtham      | decoration   | 2        | 120   | 240   | delivered |
+| 63    | 01-01-20 | 102  | shiva        | stationary   | 3        | 12    | 36    | delivered |
+| 64    | 01-01-20 | 103  | kannan       | chocolate    | 3        | 450   | 450   | delivered |
 
  # Features VI
    employee details: display the employee details.
@@ -232,7 +239,7 @@ select * from employee;
 
 
  # Feature VII
-   display the product price 100 and 250
+   * display the product price 100 and 250
      
      ```sql
      select * from product where price  between 100 and 250;
@@ -246,7 +253,7 @@ select * from employee;
 
 
 # Feature VIII
- display the customer card holder purchase details(sub query)
+ * display the customer card holder purchase details(sub query)
 
      ```sql
      select customer_name,
@@ -265,7 +272,7 @@ select * from employee;
 
 
 # Features IX
- display the quantity in ascending order for monitor the fast moving product
+ * display the quantity in ascending order for monitor the fast moving product
  
 ```sql
 select p.product_no,p.stock_id,p.quantity 
@@ -283,7 +290,7 @@ left JOIN bills o on p.quantity = o.quantity order by quantity asc;
 | 103        | 3        | 109      | 
 
 # Features X
-  Counting the working employee:
+  * Employee count:
   ```sql
   
 select count(*)  as employee_count from employee;
@@ -295,7 +302,7 @@ select count(*)  as employee_count from employee;
 
 
 # Features XI
- calculate daily income
+ * calculate daily income
  ```sql
  select sum(total)as daily_income from bills;
 ```
@@ -306,7 +313,7 @@ select count(*)  as employee_count from employee;
 | 1176         | 
 
 # Features XII
-calculate the income any date(functions)
+* calculate the income any date(functions)
 ```sql
 CREATE OR REPLACE FUNCTION GET_TOTAL_AMOUNT( i_date DATE)  RETURN NUMBER AS 
 v_total number;
@@ -317,7 +324,7 @@ select sum(total) INTO v_total from bills where bill_date ='02-jan-2020';
 END GET_TOTAL_AMOUNT;
 ```
 
-display the income 
+* display the income 
 ```sql
 select GET_TOTAL_AMOUNT(SYSDATE)as income_on_date from dual;
 ```
@@ -328,7 +335,7 @@ select GET_TOTAL_AMOUNT(SYSDATE)as income_on_date from dual;
 | 690            | 
 
 # Features XIII
- number of customer purchase on date
+ * number of customer purchase on date
  ```sql
  select count(*) as number_of_customer,bill_date from bills group by bill_date;
  ```
