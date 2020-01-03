@@ -356,6 +356,7 @@ select o.product_id,o.price,o.quantity from bill_order o where o.customer_no=101
 ```
 
 #### Table
+
 | Product_id  |price  |quantity| 
 | 1           | 400   | 3      | 
 | 1           | 300   | 4      | 
