@@ -153,50 +153,67 @@ constraint mobile_number_ck check(mobile_number >999999999 and mobile_number <10
 
 
   ## Features V
-  *bills:display and provide invoice bill to the customer
+  *bill_items:display and provide invoice bill to the customer
   ```sql
-create sequence bill_no_sq  start with 1  INCREMENT by 1;
+create sequence bill_item_id_seq  start with 1 increment by 1;
 
-create sequence cus_no_sq  start with 100  INCREMENT by 1;
-
-create table bills(bill_no number ,
-bill_date date not null,
-cus_no number not null unique,
-customer_name varchar2(30)not null,
-product_name VARCHAR2(35) not null,
+create table bill_items(
+bill_item_id number ,
+bill_no number not null,
+product_id number not null,
 quantity number not null,
 price number not null,
-total number not null,
-status varchar2(20) not null,
-constraint bill_no_pk primary key (bill_no),
-constraint product_name_fk foreign key (product_name) references product(product_name)
-);
+total_amount number  default 0,
+status varchar2(100) default 'ORDERED',
+constraint bill_no_fk foreign key(bill_no) references bill_order(p_id),
+constraint bill_products_id_fk foreign key (product_id) references product(product_id),
+unique ( bill_no , product_id ));
 
 ```
-* Adding the billing details:
+* Adding the bill_items details:
 ```sql
-insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
-values(bill_no_sq.nextval,'02-jan-2020',cus_no_sq.nextval,'mani maran','dall',3,450,450,'delivered');
-insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
-values(bill_no_sq.nextval,'02_jan_2020',cus_no_sq.nextval,'gowtham','decoration',2,120,240,'delivered');
-insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
-values(bill_no_sq.nextval,'01-jan-2020',cus_no_sq.nextval,'shiva','stationary',3,12,36,'delivered');
-insert into bills(bill_no,bill_date,cus_no,customer_name,product_name,quantity,price,total,status)
-values(bill_no_sq.nextval,'01-jan-2020',cus_no_sq.nextval,'kannan','chocolate',3,450,450,'delivered');
+insert into bill_items (bill_item_id,bill_no,product_id,quantity,price,total_amount) values (bill_item_id_seq.nextval,10,1,2,5,10);
 ```
-* Display the bills
+* Display the bill_items 
+#### Table
 
+| bill_item_id | bill_no | product_id | quanity |  price | total |  status   |
+|--------------|---------|------------|---------|--------|-------|-----------|
+|    13        |   16	   |    1	      |   2	    |  975	  | 150	  | cancelled |
+|    21	       |   30	   |    1  	    |   5	    |  50    | 250	  | ORDERED   |
 ```sql
 select * from bills;
 ```
-#### Table
 
-|bill_no|bill_date |cus_no|customer_name | product_name | quantity | price | total |  status   |
-|-------|----------|------|--------------|--------------|----------|-------|-------|-----------|
-| 61    | 02-01-20 | 100  | mani maran   | dall         | 3        | 450   | 450   | delivered |
-| 62    | 02-01-20 | 101  | gowtham      | decoration   | 2        | 120   | 240   | delivered |
-| 63    | 01-01-20 | 102  | shiva        | stationary   | 3        | 12    | 36    | delivered |
-| 64    | 01-01-20 | 103  | kannan       | chocolate    | 3        | 450   | 450   | delivered |
+  ## Features V
+  *bill_order:display and provide invoice billorder to the customer
+  ```sql
+  
+create sequence pr_idd_sq start with 10 increment by 1;
+create table bill_order(
+p_id number,
+customer_no number ,
+total_amount number not null,
+status varchar2(20) default 'pending',
+ordered_date timestamp  default systimestamp,
+constraint p_id_pk primary key (p_id),
+constraint total_amount_ck check (total_amount >=0)
+);
+```
+* Adding the bill_items details:
+```sql
+
+insert into bill_order(p_id,customer_no,total_amount,ordered_date)
+values(pr_idd_sq.nextval,129,1234,'30-jan-2020');
+```
+* Display the bill_items 
+| bill_no | customer_number | total_amount |  ordered_date  |
+|---------|-----------------|--------------|----------------|
+|    13   |   129       	   |    1234	     |   30-jan-2020  |
+```sql
+select * from bills;
+```
+
 
  # Features VI
    employee details: display the employee details.
