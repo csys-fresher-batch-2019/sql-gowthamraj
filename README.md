@@ -207,6 +207,8 @@ insert into bill_order(p_id,customer_no,total_amount,ordered_date)
 values(pr_idd_sq.nextval,129,1234,'30-jan-2020');
 ```
 * Display the bill_items 
+#### Table
+
 | bill_no | customer_number | total_amount |  ordered_date  |
 |---------|-----------------|--------------|----------------|
 |    13   |   129       	   |    1234	     |   30-jan-2020  |
